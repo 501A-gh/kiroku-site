@@ -35,11 +35,10 @@ export default function Profile({ user }: { user: User }) {
             signOut(auth);
             router.push("/");
           }}
-          className="bg-red-500 text-white rounded-lg px-2 py-1 font-medium hover:bg-red-600 transition duration-200 cursor-pointer active:scale-95"
+          className="bg-red-500 text-white rounded-lg px-2 py-1.5 font-medium hover:bg-red-600 transition duration-200 cursor-pointer active:scale-95 flex gap-2 items-center justify-center"
         >
-          <div className="flex flex-row gap-2 items-center justify-center">
-            Sign Out <LogOut className="size-5" />
-          </div>
+          <LogOut className="size-4" />
+          <span>Sign Out</span>
         </button>
       </PopoverContent>
     </Popover>
