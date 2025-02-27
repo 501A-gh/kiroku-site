@@ -23,15 +23,10 @@ export function DatePicker({
           {date ? format(date, "PPP") : <span>{title}</span>}
         </PopoverTrigger>
         <PopoverContent
-          className="w-auto bg-white border border-zinc-200 p-0 rounded-2xl shadow-md min-w-60"
+          className="w-auto bg-white border border-zinc-200 p-0 rounded-2xl shadow-md min-w-60 flex flex-col gap-4"
           align="start"
         >
-          <Calendar
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-            initialFocus
-          />
+          <Calendar mode="single" selected={date} onSelect={setDate} />
         </PopoverContent>
       </Popover>
       <input type="hidden" name={name} value={date ? date.toISOString() : ""} />
