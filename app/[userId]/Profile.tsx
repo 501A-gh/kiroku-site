@@ -6,6 +6,7 @@ import { signOut, User } from "firebase/auth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { LogOut } from "react-feather";
 
 export default function Profile({ user }: { user: User }) {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Profile({ user }: { user: User }) {
       <PopoverContent
         align="end"
         sideOffset={4}
-        className="bg-white border border-zinc-200 p-3 rounded-2xl shadow-md min-w-60 flex flex-col gap-6"
+        className="bg-white border border-zinc-200 p-3 rounded-2xl shadow-md min-w-60 flex flex-col gap-4"
       >
         <div className="px-3 pt-2">
           <h6>{user.displayName}</h6>
@@ -34,9 +35,11 @@ export default function Profile({ user }: { user: User }) {
             signOut(auth);
             router.push("/");
           }}
-          className="bg-red-500 text-white rounded-lg px-4 py-2 font-medium hover:bg-red-600 transition duration-200 cursor-pointer"
+          className="bg-red-500 text-white rounded-lg px-2 py-1 font-medium hover:bg-red-600 transition duration-200 cursor-pointer active:scale-95"
         >
-          Sign Out
+          <div className="flex flex-row gap-2 items-center justify-center">
+            Sign Out <LogOut className="size-5" />
+          </div>
         </button>
       </PopoverContent>
     </Popover>

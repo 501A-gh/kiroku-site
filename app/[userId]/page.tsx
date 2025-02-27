@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import Link from "next/link";
-import { Lock } from "react-feather";
+import { Lock, Settings } from "react-feather";
 import Input from "./Input";
 
 export default function Fridge({
@@ -33,7 +33,10 @@ export default function Fridge({
       <header className="flex items-center p-6 w-full bg-white border-b border-zinc-200">
         <div className="flex items-center justify-between max-w-[750px] w-full mx-auto">
           <h3>Kiroku</h3>
-          {userId === user.uid ? <Profile user={user} /> : <h5>Viewing</h5>}
+          <div className="flex flex-row items-center gap-5">
+            <Settings className="size-5 hover:rotate-90 duration-700 cursor-pointer" />
+            {userId === user.uid ? <Profile user={user} /> : <h5>Viewing</h5>}
+          </div>
         </div>
       </header>
       <main className="p-6">
