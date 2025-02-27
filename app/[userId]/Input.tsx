@@ -101,7 +101,7 @@ export default function Input({
           <DatePicker title="Expiration" />
         </div>
 
-        <button className="bg-emerald-500 font-semibold text-white rounded-full px-3 py-1.5 flex items-center gap-1 transition duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 cursor-pointer">
+        <button className="bg-emerald-500 font-semibold text-white rounded-full px-3 py-1.5 flex items-center gap-1 transition duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 cursor-pointer active:scale-95 active:duration-300">
           {pending ? (
             <Loader className="animate-spin size-5" />
           ) : (
