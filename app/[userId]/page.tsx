@@ -6,6 +6,7 @@ import { auth } from "@/firebase";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import Link from "next/link";
 import { Lock } from "react-feather";
+import Input from "./Input";
 
 export default function Fridge({
   params,
@@ -28,15 +29,16 @@ export default function Fridge({
       </div>
     </div>
   ) : (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <header className="flex items-center p-6 w-full bg-white border-b border-zinc-200">
-        <div className="flex items-center justify-between max-w-[900px] w-full mx-auto">
+        <div className="flex items-center justify-between max-w-[750px] w-full mx-auto">
           <h3>Kiroku</h3>
-          <Profile user={user} />
+          {userId === user.uid ? <Profile user={user} /> : <h5>Viewing</h5>}
         </div>
       </header>
-      <main className="flex flex-col p-6">
-        <div className="max-w-[900px] w-full mx-auto flex flex-col gap-4">
+      <main className="p-6">
+        <div className="max-w-[750px] w-full mx-auto flex flex-col gap-10">
+          <Input user={user} userId={userId} />
           <h4>All Items</h4>
         </div>
       </main>
