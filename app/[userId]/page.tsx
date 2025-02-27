@@ -7,6 +7,7 @@ import FullScreenLoader from "@/components/FullScreenLoader";
 import Link from "next/link";
 import { Lock, Settings } from "react-feather";
 import Input from "./Input";
+import Items from "./Items";
 
 export default function Fridge({
   params,
@@ -42,7 +43,7 @@ export default function Fridge({
       <main className="p-6">
         <div className="max-w-[750px] w-full mx-auto flex flex-col gap-10">
           <Input user={user} userId={userId} />
-          <h4>All Items</h4>
+          <Items userId={userId} />
         </div>
       </main>
     </div>
