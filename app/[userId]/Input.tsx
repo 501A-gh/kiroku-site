@@ -1,4 +1,5 @@
 "use client";
+import { DatePicker } from "@/components/DatePicker";
 import {
   Select,
   SelectContent,
@@ -79,22 +80,26 @@ export default function Input({
         />
       </div>
       <div className="px-3 pb-3 flex items-center justify-between">
-        <Select name="category" required>
-          <SelectTrigger className="w-[180px] bg-white border border-zinc-200 rounded-xl capitalize">
-            <SelectValue placeholder="Food Category" />
-          </SelectTrigger>
-          <SelectContent className="max-h-60 overflow-y-auto bg-white border-zinc-200 shadow-md rounded-xl">
-            {categories.map((category) => (
-              <SelectItem
-                key={category}
-                value={category}
-                className="capitalize"
-              >
-                {category}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-2">
+          <Select name="category" required>
+            <SelectTrigger className="w-fit bg-white border border-zinc-200 rounded-xl capitalize">
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent className="max-h-60 overflow-y-auto bg-white border-zinc-200 shadow-md rounded-xl">
+              {categories.map((category) => (
+                <SelectItem
+                  key={category}
+                  value={category}
+                  className="capitalize"
+                >
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <DatePicker title="Purchase" />
+          <DatePicker title="Expiration" />
+        </div>
 
         <button className="bg-emerald-500 font-semibold text-white rounded-full px-3 py-1.5 flex items-center gap-1 transition duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 cursor-pointer">
           {pending ? (
