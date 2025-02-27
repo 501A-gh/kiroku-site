@@ -1,4 +1,4 @@
-import SignInWithGoogle from "@/components/SignInWithGoogle";
+import SignInWithGoogle from "@/app/SignInWithGoogle";
 
 export default function Home() {
   return (

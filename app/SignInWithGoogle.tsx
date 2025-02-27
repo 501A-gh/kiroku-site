@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -7,25 +7,28 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/firebase";
 import { UserSettings } from "@/types";
+import { cn } from "@/utils";
 
 export default function SignInWithGoogle() {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
+  useEffect(() => {
+    if (user) {
+      router.push(user.uid);
+    }
+  }, [router, user]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   if (error) {
     return <div>Error: {error.message}</div>;
-  }
-  if (user) {
-    router.push(`${user.uid}`);
-    return null;
   }
 
   return (
     <button
-      className="flex items-center justify-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 font-semibold text-neutral-800 shadow transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 cursor-pointer"
+      className={cn(
+        "flex items-center justify-center gap-1.5 rounded-full border border-neutral-200 bg-white px-4 py-2 font-semibold text-neutral-800 shadow transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 cursor-pointer",
+        loading && "opacity-50 cursor-not-allowed"
+      )}
+      disabled={loading}
       onClick={async () => {
         try {
           const {
@@ -77,7 +80,7 @@ export default function SignInWithGoogle() {
         />
         <path fill="none" d="M0 0h48v48H0z" />
       </svg>
-      Sign in with Google
+      {loading ? "Loading..." : "Sign in with Google"}
     </button>
   );
 }
