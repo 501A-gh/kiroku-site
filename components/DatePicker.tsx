@@ -6,7 +6,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "./Popover";
 import { Calendar } from "@/components/Calendar";
 import { Calendar as CalendarIcon } from "react-feather";
 
-export function DatePicker({ title = "Select a date" }: { title?: string }) {
+export function DatePicker({
+  title = "Select a date",
+  name,
+}: {
+  title?: string;
+  name: string;
+}) {
   const [date, setDate] = React.useState<Date>();
 
   return (
@@ -28,7 +34,7 @@ export function DatePicker({ title = "Select a date" }: { title?: string }) {
           />
         </PopoverContent>
       </Popover>
-      <input type="hidden" name="date" value={date ? date.toISOString() : ""} />
+      <input type="hidden" name={name} value={date ? date.toISOString() : ""} />
     </>
   );
 }

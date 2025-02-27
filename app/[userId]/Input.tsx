@@ -42,8 +42,8 @@ export default function Input({
         await addDoc(collection(db, "users", user.uid, "items"), {
           name: String(formData.get("name")),
           description: String(formData.get("description")),
-          datePurchased: new Date(),
-          expirationDate: new Date(),
+          datePurchased: new Date(String(formData.get("datePurchased"))),
+          expirationDate: new Date(String(formData.get("expirationDate"))),
           category: String(formData.get("category")),
         });
       }
@@ -97,8 +97,8 @@ export default function Input({
               ))}
             </SelectContent>
           </Select>
-          <DatePicker title="Purchase" />
-          <DatePicker title="Expiration" />
+          <DatePicker title="Purchase" name="datePurchased" />
+          <DatePicker title="Expiration" name="expirationDate" />
         </div>
 
         <button className="bg-emerald-500 font-semibold text-white rounded-full px-3 py-1.5 flex items-center gap-1 transition duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 cursor-pointer active:scale-95 active:duration-300">
