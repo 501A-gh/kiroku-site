@@ -5,9 +5,21 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import Link from "next/link";
-import { Lock, Settings } from "react-feather";
+import { Check, Lock, RefreshCw, Settings } from "react-feather";
 import Input from "./Input";
 import Items from "./Items";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/Dialog";
+import { Button } from "@/components/Button";
+import { Switch } from "@/components/ToggleSwitch";
 
 export default function Fridge({
   params,
@@ -35,7 +47,96 @@ export default function Fridge({
         <div className="flex items-center justify-between max-w-[750px] w-full mx-auto">
           <h3>Kiroku</h3>
           <div className="flex flex-row items-center gap-5">
-            <Settings className="size-5 hover:rotate-90 duration-700 cursor-pointer" />
+            <Dialog>
+              <DialogTrigger asChild>
+                <button>
+                  <Settings className="size-5 hover:rotate-90 duration-700 cursor-pointer" />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <h6 className="w-full text-center pt-3">Setting</h6>
+                <div className="w-full flex flex-col border border-white bg-white gap-5 p-6 *:font-medium">
+                  <div className="flex flex-row justify-between items-center">
+                    <div>
+                      <label className="font-semibold" htmlFor="ProgressBar">
+                        Progress Bar
+                      </label>
+                      <p className=" text-zinc-500">
+                        Days the progress bar starts count down
+                      </p>
+                    </div>
+                    <input
+                      type="number"
+                      id="ProgressBar"
+                      min="3"
+                      max="30"
+                      className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
+                    />
+                  </div>
+                  <div className="flex flex-row justify-between items-center">
+                    <div>
+                      <label
+                        className="font-semibold"
+                        htmlFor="DefaultExpiration"
+                      >
+                        Default Expiration Date
+                      </label>
+                      <p className=" text-zinc-500">
+                        The default days till expiration is date isn’t inputed
+                      </p>
+                    </div>
+                    <input
+                      type="number"
+                      id="DefaultExpiration"
+                      min="1"
+                      max="30"
+                      className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
+                    />
+                  </div>
+                  <div className="flex flex-row justify-between items-center">
+                    <div>
+                      <label
+                        className="font-semibold"
+                        htmlFor="ExpirationSection"
+                      >
+                        Expiration Section
+                      </label>
+                      <p className=" text-zinc-500">
+                        Days till expiration section
+                      </p>
+                    </div>
+                    <input
+                      type="number"
+                      id="ExpirationSection"
+                      min="1"
+                      max="10"
+                      className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
+                    />
+                  </div>
+                  <div className="flex flex-row justify-between items-center">
+                    <div>
+                      <label className="font-semibold" htmlFor="Share">
+                        Fridge Sharing
+                      </label>
+                      <p className=" text-zinc-500">
+                        Allow other user to view your fridge
+                      </p>
+                    </div>
+                    <Switch id="Share" />
+                  </div>
+                </div>
+                <DialogFooter className="sm:justify-start pb-4">
+                  <div className="flex flex-row items-center justify-center w-full gap-3">
+                    <Button variant={"transparentDialog"}>
+                      Reset <RefreshCw />
+                    </Button>
+                    <Button variant={"filledDialog"}>
+                      Save <Check />
+                    </Button>
+                  </div>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
             {userId === user.uid ? <Profile user={user} /> : <h5>Viewing</h5>}
           </div>
         </div>
