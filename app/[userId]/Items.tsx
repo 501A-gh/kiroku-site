@@ -1,10 +1,9 @@
 "use client";
 import { db } from "@/firebase";
 import { Item } from "@/types";
-import { collection, orderBy, query } from "firebase/firestore";
-import React from "react";
+import { collection, orderBy, query, where } from "firebase/firestore";
+import React, { useState } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { motion, AnimatePresence } from "motion/react";
 import { ChartContainer } from "@/components/Charts";
 import {
   Label,
@@ -20,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/Select";
+import { categories } from "./Input";
 
 const maxDays = 10; // Maximum number of days for the chart
 
@@ -36,9 +36,19 @@ const getAlertLevel = (daysRemaining: number) => {
 
 export default function Items({ userId }: { userId: string }) {
   type SortOption = "datePurchased" | "expirationDate";
-  const [sort, setSort] = React.useState<SortOption>("datePurchased");
+
+  const [sort, setSort] = useState<SortOption>("datePurchased");
+  const [filter, setFilter] = useState<string>("none");
   const [value, loading, error] = useCollection(
-    query(collection(db, "users", userId, "items"), orderBy(sort))
+    query(
+      collection(db, "users", userId, "items"),
+      orderBy(sort),
+      where(
+        "category",
+        filter == "none" ? "!=" : "==",
+        filter == "none" ? "none" : filter
+      )
+    )
   );
 
   type ItemWithId = Item & {
@@ -54,6 +64,25 @@ export default function Items({ userId }: { userId: string }) {
       <div className="flex items-center justify-between gap-4">
         <h4>All Items</h4>
         <div className="flex items-center gap-2">
+          <Select name="category" defaultValue="none" onValueChange={setFilter}>
+            <SelectTrigger>
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent align="end">
+              <SelectItem value="none" className="capitalize">
+                All Items
+              </SelectItem>
+              {categories.map((category) => (
+                <SelectItem
+                  key={category}
+                  value={category}
+                  className="capitalize"
+                >
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Select
             defaultValue={sort}
             onValueChange={(value) => setSort(value as SortOption)}
@@ -63,10 +92,10 @@ export default function Items({ userId }: { userId: string }) {
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value={"datePurchased"} className="capitalize">
+              <SelectItem value="datePurchased" className="capitalize">
                 Date Purchased
               </SelectItem>
-              <SelectItem value={"expirationDate"} className="capitalize">
+              <SelectItem value="expirationDate" className="capitalize">
                 Expiration Date
               </SelectItem>
             </SelectContent>
@@ -74,108 +103,100 @@ export default function Items({ userId }: { userId: string }) {
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <AnimatePresence>
-          {loading ? (
-            <div>Loading...</div>
-          ) : error ? (
-            <div>Error: {error.message}</div>
-          ) : (
-            data.map(({ id, name, description, expirationDate }, i) => (
-              <motion.div
-                key={id}
-                className="bg-white border border-zinc-200 p-4 rounded-2xl shadow flex items-center gap-4 relative group"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{
-                  type: "spring",
-                  delay: 0.1 * i,
+        {loading ? (
+          <div className="flex items-center justify-center col-span-2">
+            Loading...
+          </div>
+        ) : error ? (
+          <div className="flex items-center justify-center col-span-2">
+            Error: {error.message}
+          </div>
+        ) : (
+          data.map(({ id, name, description, expirationDate }) => (
+            <div
+              key={id}
+              className="bg-white border border-zinc-200 p-4 rounded-2xl shadow flex items-center gap-4 relative group"
+            >
+              <div className="size-6 border-2 border-zinc-300 bg-white rounded-full absolute top-8 z-10 left-8 opacity-0 transition-all group-hover:opacity-100 cursor-pointer active:scale-95" />
+              <ChartContainer
+                config={{
+                  daysTillExpiration: {
+                    label: "Days till expiration",
+                  },
                 }}
+                className="aspect-square min-w-14"
               >
-                <div className="size-6 border-2 border-zinc-300 bg-white rounded-full absolute top-8 z-10 left-8 opacity-0 transition-all group-hover:opacity-100 cursor-pointer active:scale-95" />
-                <ChartContainer
-                  config={{
-                    daysTillExpiration: {
-                      label: "Days till expiration",
+                <RadialBarChart
+                  data={[
+                    {
+                      value:
+                        dateDifference(expirationDate.toDate(), new Date()) <
+                        maxDays
+                          ? dateDifference(expirationDate.toDate(), new Date())
+                          : maxDays,
+                      fill: getAlertLevel(
+                        dateDifference(expirationDate.toDate(), new Date())
+                      ),
                     },
-                  }}
-                  className="aspect-square min-w-14"
+                  ]}
+                  startAngle={90}
+                  endAngle={450}
+                  innerRadius={23}
+                  outerRadius={30}
                 >
-                  <RadialBarChart
-                    data={[
-                      {
-                        value:
-                          dateDifference(expirationDate.toDate(), new Date()) <
-                          maxDays
-                            ? dateDifference(
-                                expirationDate.toDate(),
-                                new Date()
-                              )
-                            : maxDays,
-                        fill: getAlertLevel(
-                          dateDifference(expirationDate.toDate(), new Date())
-                        ),
-                      },
-                    ]}
-                    startAngle={90}
-                    endAngle={450}
-                    innerRadius={23}
-                    outerRadius={30}
+                  <RadialBar dataKey="value" background cornerRadius={6} />
+                  <PolarAngleAxis
+                    tick={false}
+                    domain={[0, maxDays]}
+                    type="number"
+                  />
+                  <PolarRadiusAxis
+                    tick={false}
+                    tickLine={false}
+                    axisLine={false}
                   >
-                    <RadialBar dataKey="value" background cornerRadius={6} />
-                    <PolarAngleAxis
-                      tick={false}
-                      domain={[0, maxDays]}
-                      type="number"
-                    />
-                    <PolarRadiusAxis
-                      tick={false}
-                      tickLine={false}
-                      axisLine={false}
-                    >
-                      <Label
-                        content={({ viewBox }) => {
-                          if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                            return (
-                              <text
+                    <Label
+                      content={({ viewBox }) => {
+                        if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                          return (
+                            <text
+                              x={viewBox.cx}
+                              y={viewBox.cy}
+                              textAnchor="middle"
+                              dominantBaseline="middle"
+                            >
+                              <tspan
                                 x={viewBox.cx}
                                 y={viewBox.cy}
-                                textAnchor="middle"
-                                dominantBaseline="middle"
+                                className="fill-foreground text-base font-semibold"
                               >
-                                <tspan
-                                  x={viewBox.cx}
-                                  y={viewBox.cy}
-                                  className="fill-foreground text-base font-semibold"
-                                >
-                                  {dateDifference(
-                                    expirationDate.toDate(),
-                                    new Date()
-                                  )}
-                                </tspan>
-                              </text>
-                            );
-                          }
-                        }}
-                      />
-                    </PolarRadiusAxis>
-                  </RadialBarChart>
-                </ChartContainer>
-                <div className="flex-1">
-                  <h5>{name}</h5>
-                  <p className="truncate text-zinc-500">{description}</p>
-                  {/* <p>
+                                {dateDifference(
+                                  expirationDate.toDate(),
+                                  new Date()
+                                )}
+                              </tspan>
+                            </text>
+                          );
+                        }
+                      }}
+                    />
+                  </PolarRadiusAxis>
+                </RadialBarChart>
+              </ChartContainer>
+              <div className="flex-1">
+                <h5>{name}</h5>
+                <p className="truncate text-zinc-500">{description}</p>
+                {/* <p>
                     Purchased: {doc.datePurchased.toDate().toLocaleDateString()}
                   </p>
                   <p>
                     Expires: {doc.expirationDate.toDate().toLocaleDateString()}
                   </p>
                   <p>Category: {doc.category}</p> */}
-                </div>
-              </motion.div>
-            ))
-          )}
-        </AnimatePresence>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </section>
   );
