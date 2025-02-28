@@ -1,11 +1,17 @@
 "use client";
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import Profile from "./Profile";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import Link from "next/link";
-import { Check, Lock, RefreshCw, Settings } from "react-feather";
+import {
+  Check,
+  Lock,
+  RefreshCw,
+  Settings,
+  Link as LinkIcon,
+} from "react-feather";
 import Input from "./Input";
 import Items from "./Items";
 import {
@@ -28,6 +34,7 @@ export default function Fridge({
 }) {
   const { userId } = use(params);
   const [user, loading, error] = useAuthState(auth);
+  const [share, setShare] = useState<boolean>(false);
   if (loading) return <FullScreenLoader />;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -116,16 +123,34 @@ export default function Fridge({
                       className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
                     />
                   </div>
-                  <div className="flex flex-row justify-between items-center">
-                    <div>
-                      <label className="font-semibold" htmlFor="Share">
-                        Fridge Sharing
-                      </label>
-                      <p className=" text-zinc-500">
-                        Allow other user to view your fridge
-                      </p>
+                  <div className="grid gap-2">
+                    <div className="flex flex-row justify-between items-center">
+                      <div>
+                        <label className="font-semibold" htmlFor="Share">
+                          Fridge Sharing
+                        </label>
+                        <p className=" text-zinc-500">
+                          Allow other user to view your fridge
+                        </p>
+                      </div>
+                      <Switch
+                        id="Share"
+                        checked={share}
+                        onCheckedChange={() => {
+                          setShare(!share);
+                        }}
+                      />
                     </div>
-                    <Switch id="Share" />
+                    {share && (
+                      <div className="w-full border border-zinc-300 bg-zinc-200 flex flex-row items-center rounded-md p-2 *:text-zinc-600 gap-2">
+                        <button>
+                          <LinkIcon className="w-4 hover:cursor-pointer" />
+                        </button>
+                        <p className="truncate max-w-96">
+                          https://kiroku-fridge.vercel.app/{userId}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <DialogFooter className="sm:justify-start pb-4">
