@@ -18,6 +18,7 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/Dialog";
@@ -56,98 +57,100 @@ export default function Fridge({
                 <Settings className="size-5 hover:rotate-90 duration-700 cursor-pointer" />
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
-                <DialogTitle>
-                  <p>Setting</p>
-                </DialogTitle>
-                <div className="w-full flex flex-col border border-white bg-white gap-5 p-6 *:font-medium">
-                  <div className="flex flex-row justify-between items-center">
-                    <div>
-                      <label className="font-semibold" htmlFor="ProgressBar">
-                        Progress Bar
-                      </label>
-                      <p className=" text-zinc-500">
-                        Days the progress bar starts count down
-                      </p>
-                    </div>
-                    <input
-                      type="number"
-                      id="ProgressBar"
-                      min="3"
-                      max="30"
-                      defaultValue={25}
-                      className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
-                    />
-                  </div>
-                  <div className="flex flex-row justify-between items-center">
-                    <div>
-                      <label
-                        className="font-semibold"
-                        htmlFor="DefaultExpiration"
-                      >
-                        Default Expiration Date
-                      </label>
-                      <p className=" text-zinc-500">
-                        The default days till expiration is date isn’t inputed
-                      </p>
-                    </div>
-                    <input
-                      type="number"
-                      id="DefaultExpiration"
-                      min="1"
-                      max="30"
-                      defaultValue={15}
-                      className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
-                    />
-                  </div>
-                  <div className="flex flex-row justify-between items-center">
-                    <div>
-                      <label
-                        className="font-semibold"
-                        htmlFor="ExpirationSection"
-                      >
-                        Expiration Section
-                      </label>
-                      <p className=" text-zinc-500">
-                        Days till expiration section
-                      </p>
-                    </div>
-                    <input
-                      type="number"
-                      id="ExpirationSection"
-                      min="1"
-                      max="10"
-                      defaultValue={5}
-                      className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
-                    />
-                  </div>
-                  <div className="grid gap-2">
+                <DialogHeader>
+                  <DialogTitle className="text-center">Setting</DialogTitle>
+                </DialogHeader>
+                <div className="p-1">
+                  <div className="w-full rounded-2xl flex flex-col border border-zinc-200 bg-white gap-5 p-6 *:font-medium">
                     <div className="flex flex-row justify-between items-center">
                       <div>
-                        <label className="font-semibold" htmlFor="Share">
-                          Fridge Sharing
+                        <label className="font-semibold" htmlFor="ProgressBar">
+                          Progress Bar
                         </label>
                         <p className=" text-zinc-500">
-                          Allow other user to view your fridge
+                          Days the progress bar starts count down
                         </p>
                       </div>
-                      <Switch
-                        id="Share"
-                        checked={share}
-                        onCheckedChange={() => {
-                          setShare(!share);
-                        }}
+                      <input
+                        type="number"
+                        id="ProgressBar"
+                        min="3"
+                        max="30"
+                        defaultValue={25}
+                        className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
                       />
                     </div>
-                    {share && (
-                      <div className="w-full border border-zinc-300 bg-zinc-200 flex flex-row items-center rounded-xl p-2 *:text-zinc-600 gap-2">
-                        <button>
-                          <LinkIcon className="w-4 hover:cursor-pointer" />
-                        </button>
-                        <p className="truncate max-w-96">
-                          https://kiroku-fridge.vercel.app/{userId}
+                    <div className="flex flex-row justify-between items-center">
+                      <div>
+                        <label
+                          className="font-semibold"
+                          htmlFor="DefaultExpiration"
+                        >
+                          Default Expiration Date
+                        </label>
+                        <p className=" text-zinc-500">
+                          The default days till expiration is date isn’t inputed
                         </p>
                       </div>
-                    )}
+                      <input
+                        type="number"
+                        id="DefaultExpiration"
+                        min="1"
+                        max="30"
+                        defaultValue={15}
+                        className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
+                      />
+                    </div>
+                    <div className="flex flex-row justify-between items-center">
+                      <div>
+                        <label
+                          className="font-semibold"
+                          htmlFor="ExpirationSection"
+                        >
+                          Expiration Section
+                        </label>
+                        <p className=" text-zinc-500">
+                          Days till expiration section
+                        </p>
+                      </div>
+                      <input
+                        type="number"
+                        id="ExpirationSection"
+                        min="1"
+                        max="10"
+                        defaultValue={5}
+                        className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <div className="flex flex-row justify-between items-center">
+                        <div>
+                          <label className="font-semibold" htmlFor="Share">
+                            Fridge Sharing
+                          </label>
+                          <p className=" text-zinc-500">
+                            Allow other user to view your fridge
+                          </p>
+                        </div>
+                        <Switch
+                          id="Share"
+                          checked={share}
+                          onCheckedChange={() => {
+                            setShare(!share);
+                          }}
+                        />
+                      </div>
+                      {share && (
+                        <div className="w-full border border-zinc-300 bg-zinc-200 flex flex-row items-center rounded-xl p-2 *:text-zinc-600 gap-2">
+                          <button>
+                            <LinkIcon className="w-4 hover:cursor-pointer" />
+                          </button>
+                          <p className="truncate max-w-96">
+                            https://kiroku-fridge.vercel.app/{userId}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <DialogFooter className="sm:justify-start pb-4">
