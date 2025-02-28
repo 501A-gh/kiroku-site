@@ -38,10 +38,9 @@ export default function SignInWithGoogle() {
           if (!(await getDoc(userRef)).exists()) {
             const userSettings: UserSettings = {
               default: {
-                daysToWarn: 3,
-                daysToAlert: 1,
-                daysToHighlight: 5,
-                daysTillExpiration: 14,
+                progressBar: 25,
+                expirSection: 5,
+                defaultExpir: 15,
               },
               public: false,
             };

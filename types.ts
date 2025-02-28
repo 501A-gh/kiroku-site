@@ -2,10 +2,9 @@ import { Timestamp } from "firebase/firestore";
 
 export interface UserSettings {
   default: {
-    daysToWarn: number;
-    daysToAlert: number;
-    daysToHighlight: number;
-    daysTillExpiration: number;
+    progressBar: number;
+    expirSection: number;
+    defaultExpir: number;
   };
   public: boolean;
 }
