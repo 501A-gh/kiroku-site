@@ -16,11 +16,8 @@ import Input from "./Input";
 import Items from "./Items";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/Dialog";
@@ -56,12 +53,12 @@ export default function Fridge({
           <div className="flex flex-row items-center gap-5">
             <Dialog>
               <DialogTrigger asChild>
-                <button>
-                  <Settings className="size-5 hover:rotate-90 duration-700 cursor-pointer" />
-                </button>
+                <Settings className="size-5 hover:rotate-90 duration-700 cursor-pointer" />
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
-                <h6 className="w-full text-center pt-3">Setting</h6>
+                <DialogTitle>
+                  <p>Setting</p>
+                </DialogTitle>
                 <div className="w-full flex flex-col border border-white bg-white gap-5 p-6 *:font-medium">
                   <div className="flex flex-row justify-between items-center">
                     <div>
