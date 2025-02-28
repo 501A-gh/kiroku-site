@@ -139,7 +139,7 @@ export default function Fridge({
                       />
                     </div>
                     {share && (
-                      <div className="w-full border border-zinc-300 bg-zinc-200 flex flex-row items-center rounded-md p-2 *:text-zinc-600 gap-2">
+                      <div className="w-full border border-zinc-300 bg-zinc-200 flex flex-row items-center rounded-xl p-2 *:text-zinc-600 gap-2">
                         <button>
                           <LinkIcon className="w-4 hover:cursor-pointer" />
                         </button>
