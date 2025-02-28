@@ -1,7 +1,7 @@
 "use client";
 import { db } from "@/firebase";
 import { Item } from "@/types";
-import { collection } from "firebase/firestore";
+import { collection, orderBy, query } from "firebase/firestore";
 import React from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { motion, AnimatePresence } from "motion/react";
@@ -13,6 +13,13 @@ import {
   RadialBar,
   RadialBarChart,
 } from "recharts";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/Select";
 
 const maxDays = 10; // Maximum number of days for the chart
 
@@ -28,16 +35,44 @@ const getAlertLevel = (daysRemaining: number) => {
 };
 
 export default function Items({ userId }: { userId: string }) {
+  type SortOption = "datePurchased" | "expirationDate";
+  const [sort, setSort] = React.useState<SortOption>("datePurchased");
   const [value, loading, error] = useCollection(
-    collection(db, "users", userId, "items")
+    query(collection(db, "users", userId, "items"), orderBy(sort))
   );
 
+  type ItemWithId = Item & {
+    id: string;
+  };
+
   const data =
-    value?.docs.map((doc) => ({ ...(doc.data() as Item), id: doc.id })) || [];
+    value?.docs.map((doc) => ({ ...doc.data(), id: doc.id } as ItemWithId)) ||
+    [];
 
   return (
-    <div className="w-full flex flex-col gap-4">
-      <h4>All Items</h4>
+    <section className="w-full flex flex-col gap-4">
+      <div className="flex items-center justify-between gap-4">
+        <h4>All Items</h4>
+        <div className="flex items-center gap-2">
+          <Select
+            defaultValue={sort}
+            onValueChange={(value) => setSort(value as SortOption)}
+            name="sort"
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={"datePurchased"} className="capitalize">
+                Date Purchased
+              </SelectItem>
+              <SelectItem value={"expirationDate"} className="capitalize">
+                Expiration Date
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
       <div className="grid grid-cols-2 gap-4">
         <AnimatePresence>
           {loading ? (
@@ -142,6 +177,6 @@ export default function Items({ userId }: { userId: string }) {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </section>
   );
 }

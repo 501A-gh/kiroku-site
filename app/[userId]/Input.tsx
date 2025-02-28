@@ -13,7 +13,7 @@ import { addDoc, collection } from "firebase/firestore";
 import React, { useActionState, useEffect } from "react";
 import { Loader, Plus } from "react-feather";
 
-const categories: string[] = [
+export const categories: string[] = [
   "fruits",
   "vegetables",
   "dairy",
@@ -82,10 +82,10 @@ export default function Input({
       <div className="px-3 pb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Select name="category" required>
-            <SelectTrigger className="w-fit bg-white border border-zinc-200 rounded-xl capitalize">
+            <SelectTrigger>
               <SelectValue placeholder="Category" />
             </SelectTrigger>
-            <SelectContent className="max-h-60 overflow-y-auto bg-white border-zinc-200 shadow-md rounded-xl">
+            <SelectContent>
               {categories.map((category) => (
                 <SelectItem
                   key={category}
@@ -97,8 +97,8 @@ export default function Input({
               ))}
             </SelectContent>
           </Select>
-          <DatePicker title="Purchase" name="datePurchased" />
-          <DatePicker title="Expiration" name="expirationDate" />
+          <DatePicker required title="Purchase" name="datePurchased" />
+          <DatePicker required title="Expiration" name="expirationDate" />
         </div>
 
         <button className="bg-emerald-500 font-semibold text-white rounded-full px-3 py-1.5 flex items-center gap-1 transition duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 cursor-pointer active:scale-95 active:duration-300">
