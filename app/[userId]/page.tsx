@@ -70,6 +70,7 @@ export default function Fridge({
                       id="ProgressBar"
                       min="3"
                       max="30"
+                      defaultValue={25}
                       className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
                     />
                   </div>
@@ -90,6 +91,7 @@ export default function Fridge({
                       id="DefaultExpiration"
                       min="1"
                       max="30"
+                      defaultValue={15}
                       className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
                     />
                   </div>
@@ -110,6 +112,7 @@ export default function Fridge({
                       id="ExpirationSection"
                       min="1"
                       max="10"
+                      defaultValue={5}
                       className="border border-zinc-300 bg-zinc-200 p-1 min-w-10 rounded-md text-center"
                     />
                   </div>
