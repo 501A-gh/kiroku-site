@@ -3,6 +3,9 @@
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --chart-alert: #f43f5e;
+  --chart-warning: #f59e0b;
+  --chart-safe: #22c55e;
 }
 
 body {
