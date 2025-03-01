@@ -141,7 +141,7 @@ export default function Items({ userId }: { userId: string }) {
                   ]}
                   startAngle={90}
                   endAngle={450}
-                  innerRadius={23}
+                  innerRadius={21}
                   outerRadius={30}
                 >
                   <RadialBar dataKey="value" background cornerRadius={6} />
