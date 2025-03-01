@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/Select";
 import { db } from "@/firebase";
+import { Item } from "@/types";
 import { User } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useActionState, useEffect } from "react";
@@ -39,13 +40,15 @@ export default function Input({
   const [state, action, pending] = useActionState(
     async (_: unknown, formData: FormData) => {
       if (user.uid === userId) {
-        await addDoc(collection(db, "users", user.uid, "items"), {
+        const userInput: Item = {
           name: String(formData.get("name")),
           description: String(formData.get("description")),
           datePurchased: new Date(String(formData.get("datePurchased"))),
           expirationDate: new Date(String(formData.get("expirationDate"))),
           category: String(formData.get("category")),
-        });
+          finished: false,
+        };
+        await addDoc(collection(db, "users", user.uid, "items"), userInput);
       }
       return {
         success: true,

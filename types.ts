@@ -9,10 +9,17 @@ export interface UserSettings {
   public: boolean;
 }
 
-export interface Item {
+export interface FirestoreItem {
   name: string;
   description: string;
   datePurchased: Timestamp;
   expirationDate: Timestamp;
   category: string;
+  finished: boolean;
+}
+
+export interface Item
+  extends Omit<FirestoreItem, "datePurchased" | "expirationDate"> {
+  datePurchased: Date;
+  expirationDate: Date;
 }
