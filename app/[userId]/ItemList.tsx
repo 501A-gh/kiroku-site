@@ -95,8 +95,13 @@ export default function ItemList({ userId }: { userId: string }) {
             Error: {error.message}
           </div>
         ) : (
-          data.map((data) => (
-            <Item key={data.id} data={data} maxDays={maxDays} userId={userId} />
+          data.map((itemData) => (
+            <Item
+              key={itemData.id}
+              data={itemData}
+              maxDays={maxDays}
+              userId={userId}
+            />
           ))
         )}
       </div>
