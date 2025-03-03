@@ -15,7 +15,7 @@ export default function toast(toast: ToastProps) {
 }
 
 const toastVariants = cva(
-  "flex rounded-2xl shadow-lg w-full md:max-w-96 items-center p-4 border",
+  "flex rounded-2xl shadow-lg w-96 items-center p-4 border",
   {
     variants: {
       state: {
