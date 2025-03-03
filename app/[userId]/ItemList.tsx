@@ -14,6 +14,7 @@ import {
 } from "@/components/Select";
 import { categories } from "./Input";
 import Item from "./Item";
+import { Loader } from "react-feather";
 
 const maxDays = 10; // Maximum number of days for the chart
 
@@ -87,8 +88,9 @@ export default function ItemList({ userId }: { userId: string }) {
       </div>
       <div className="grid grid-cols-2 gap-4">
         {loading ? (
-          <div className="flex items-center justify-center col-span-2">
-            Loading...
+          <div className="flex items-center col-span-2 gap-2">
+            <Loader className="animate-spin size-5" />
+            <span>Loading...</span>
           </div>
         ) : error ? (
           <div className="flex items-center justify-center col-span-2">
