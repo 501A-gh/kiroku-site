@@ -1,12 +1,9 @@
 import { Timestamp } from "firebase/firestore";
 
 export interface UserSettings {
-  default: {
-    progressBar: number;
-    expirSection: number;
-    defaultExpir: number;
-  };
-  public: boolean;
+  progressBar: number;
+  defaultExpir: number;
+  isPublic: boolean;
 }
 
 export interface FirestoreItem {

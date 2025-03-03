@@ -36,8 +36,14 @@ export default function Fridge({
         <div className="flex items-center justify-between max-w-[750px] w-full mx-auto">
           <h3>Kiroku</h3>
           <div className="flex flex-row items-center gap-5">
-            <Settings userId={userId} />
-            {userId === user.uid ? <Profile user={user} /> : <h5>Viewing</h5>}
+            {userId === user.uid ? (
+              <>
+                <Settings user={user} userId={userId} />
+                <Profile user={user} />
+              </>
+            ) : (
+              <h5>Viewing</h5>
+            )}
           </div>
         </div>
       </header>

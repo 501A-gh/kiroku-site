@@ -37,12 +37,9 @@ export default function SignInWithGoogle() {
           const userRef = doc(db, "users", uid);
           if (!(await getDoc(userRef)).exists()) {
             const userSettings: UserSettings = {
-              default: {
-                progressBar: 25,
-                expirSection: 5,
-                defaultExpir: 15,
-              },
-              public: false,
+              progressBar: 7,
+              defaultExpir: 15,
+              isPublic: false,
             };
             setDoc(userRef, userSettings).then(() => {
               router.push(uid);

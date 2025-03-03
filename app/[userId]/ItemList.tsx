@@ -86,7 +86,7 @@ export default function ItemList({ userId }: { userId: string }) {
           </Select>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3">
         {loading ? (
           <div className="flex items-center col-span-2 gap-2">
             <Loader className="animate-spin size-5" />
