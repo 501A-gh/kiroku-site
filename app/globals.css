@@ -46,4 +46,7 @@
   li {
     @apply mb-2;
   }
+  #lottie path {
+    @apply fill-current stroke-current;
+  }
 }

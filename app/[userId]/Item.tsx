@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { ChartContainer } from "@/components/Charts";
 import {
   Label,
@@ -10,6 +11,10 @@ import {
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { ItemData } from "./ItemList";
+import { Player } from "@lottiefiles/react-lottie-player";
+import checkAnimation from "@/public/check-animation.json";
+import { AnimationItem } from "lottie-web";
+import { cn } from "@/utils";
 
 const dateDifference = (date1: Date, date2: Date): number => {
   const diffTime = Math.abs(date2.getTime() - date1.getTime());
@@ -32,6 +37,15 @@ export default function Item({
   userId: string;
 }) {
   const { id, name, description, expirationDate } = data;
+  const [player, setPlayer] = useState<AnimationItem | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleAnimationComplete = () => {
+    if (player) {
+      setIsPlaying(false);
+      player.stop();
+    }
+  };
 
   return (
     <div
@@ -39,14 +53,41 @@ export default function Item({
       className="bg-white border border-zinc-200 p-4 rounded-2xl shadow flex items-center gap-4 relative group"
     >
       <button
-        className="size-6 border-2 border-zinc-300 bg-white rounded-full absolute top-8 z-10 left-8 opacity-0 transition-all group-hover:opacity-100 cursor-pointer active:scale-95"
-        onClick={async () => {
-          // Set the item as finished
-          await updateDoc(doc(db, "users", userId, "items", id), {
-            finished: true,
-          });
+        className={cn(
+          "border-2 bg-white rounded-full absolute  z-10  transition-all cursor-pointer active:scale-95 flex items-center justify-center",
+          isPlaying
+            ? "size-12 top-5 left-5 *:scale-110 border-green-500 opacity-100 bg-green-50 text-green-500 text-xl"
+            : "border-dashed border-zinc-300 opacity-0 group-hover:opacity-100 size-6 top-8 left-8"
+        )}
+        onClick={() => {
+          if (player) {
+            setIsPlaying(true);
+            player.play();
+          }
         }}
-      />
+        onMouseLeave={() => !isPlaying && handleAnimationComplete()}
+        id="lottie"
+      >
+        <Player
+          lottieRef={(intance) => setPlayer(intance)}
+          autoplay={false}
+          loop={false}
+          src={checkAnimation}
+          style={{
+            width: "1em",
+            height: "1em",
+          }}
+          onEvent={async (event) => {
+            if (event === "complete") {
+              // Set the item as finished
+              handleAnimationComplete();
+              await updateDoc(doc(db, "users", userId, "items", id), {
+                finished: true,
+              });
+            }
+          }}
+        />
+      </button>
       <ChartContainer
         config={{
           daysTillExpiration: {
@@ -104,6 +145,7 @@ export default function Item({
       <div className="flex-1">
         <h5>{name}</h5>
         <p className="truncate text-zinc-500">{description}</p>
+
         {/* <p>
         Purchased: {doc.datePurchased.toDate().toLocaleDateString()}
       </p>
