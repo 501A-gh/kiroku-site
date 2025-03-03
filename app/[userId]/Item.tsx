@@ -22,7 +22,7 @@ import {
 } from "@/components/Select";
 import { categories } from "./Input";
 import { DatePicker } from "@/components/DatePicker";
-import { doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { User } from "firebase/auth";
 import toast from "@/components/Toast";
@@ -173,7 +173,13 @@ export default function Item({
               </div>
               <DialogFooter className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <Button size="icon" type="button">
+                  <Button
+                    size="icon"
+                    type="button"
+                    onClick={async () => {
+                      await deleteDoc(doc(db, "users", userId, "items", id));
+                    }}
+                  >
                     <Trash className="size-4" />
                   </Button>
                   <Button type="reset">
