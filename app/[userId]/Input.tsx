@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/Select";
+import toast from "@/components/Toast";
 import { db } from "@/firebase";
 import { Item } from "@/types";
 import { User } from "firebase/auth";
@@ -48,18 +49,45 @@ export default function Input({
           category: String(formData.get("category")),
           finished: false,
         };
-        await addDoc(collection(db, "users", user.uid, "items"), userInput);
+        try {
+          await addDoc(collection(db, "users", user.uid, "items"), userInput);
+          return {
+            success: true,
+            message: "Item has been added successfully.",
+          };
+        } catch (e) {
+          console.error(e);
+          return {
+            success: false,
+            message: "Failed to add item. Please try again.",
+          };
+        }
+      } else {
+        return {
+          success: false,
+          message: "User ID mismatch.",
+        };
       }
-      return {
-        success: true,
-        message: "Item added successfully",
-      };
     },
     undefined
   );
 
   useEffect(() => {
-    if (state?.success) console.log("Item added:", state);
+    if (state) {
+      if (state.success) {
+        toast({
+          title: "Item Added",
+          description: state?.message,
+          state: "success",
+        });
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: state?.message,
+          state: "error",
+        });
+      }
+    }
   }, [state]);
 
   return (
