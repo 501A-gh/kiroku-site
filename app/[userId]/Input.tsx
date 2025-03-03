@@ -104,10 +104,10 @@ export default function Input({
           placeholder="Product Name"
           required
         />
-        <input
-          type="text"
+        <textarea
           name="description"
-          className="border-none rounded-b-xl px-6 pb-4 pt-2 w-full text-base outline-none"
+          className="border-none rounded-b-xl px-6 pb-4 pt-2 w-full text-base outline-none resize-none"
+          rows={3}
           placeholder="Description (optional)"
         />
       </div>
@@ -129,8 +129,16 @@ export default function Input({
               ))}
             </SelectContent>
           </Select>
-          <DatePicker required title="Purchase" name="datePurchased" />
-          <DatePicker required title="Expiration" name="expirationDate" />
+          <DatePicker
+            title="Purchase"
+            name="datePurchased"
+            defaultValue={new Date()}
+          />
+          <DatePicker
+            title="Expiration"
+            name="expirationDate"
+            defaultValue={new Date()}
+          />
         </div>
 
         <Button type="submit" variant="action" disabled={pending}>

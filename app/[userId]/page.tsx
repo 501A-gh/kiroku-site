@@ -50,7 +50,7 @@ export default function Fridge({
       <main className="p-6">
         <div className="max-w-[750px] w-full mx-auto flex flex-col gap-10">
           <Input user={user} userId={userId} />
-          <ItemList userId={userId} />
+          <ItemList user={user} userId={userId} />
         </div>
       </main>
     </div>

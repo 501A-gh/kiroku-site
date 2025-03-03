@@ -90,7 +90,7 @@ export default function Settings({
       <DialogTrigger asChild>
         <SettingsIcon className="size-5 hover:rotate-90 duration-700 cursor-pointer" />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>
@@ -160,11 +160,16 @@ export default function Settings({
           </div>
           <DialogFooter className="flex items-center justify-center gap-2">
             <Button type="reset">
-              Reset <RefreshCw />
+              <RefreshCw className="size-4" />
+              Reset
             </Button>
             <Button variant="action" type="submit" disabled={pending}>
+              {pending ? (
+                <Loader className="animate-spin size-4" />
+              ) : (
+                <Check className="size-4" />
+              )}
               Save
-              {pending ? <Loader className="animate-spin" /> : <Check />}
             </Button>
           </DialogFooter>
         </form>

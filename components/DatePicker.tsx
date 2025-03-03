@@ -9,13 +9,13 @@ import { Calendar as CalendarIcon } from "react-feather";
 export function DatePicker({
   title = "Select a date",
   name,
-  required = false,
+  defaultValue,
 }: {
   title?: string;
   name: string;
-  required?: boolean;
+  defaultValue: Date;
 }) {
-  const [date, setDate] = React.useState<Date>();
+  const [date, setDate] = React.useState<Date>(defaultValue);
 
   return (
     <>
@@ -28,19 +28,14 @@ export function DatePicker({
           className="w-auto bg-white border border-zinc-200 p-0 rounded-2xl shadow-md min-w-60 flex flex-col gap-4"
           align="start"
         >
-          <Calendar
-            required={required}
-            mode="single"
-            selected={date}
-            onSelect={setDate}
-          />
+          <Calendar required mode="single" selected={date} onSelect={setDate} />
         </PopoverContent>
       </Popover>
       <input
         type="hidden"
-        required={required}
+        required
         name={name}
-        value={date ? date.toISOString() : ""}
+        defaultValue={date ? date.toISOString() : ""}
       />
     </>
   );

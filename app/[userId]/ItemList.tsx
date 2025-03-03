@@ -15,6 +15,7 @@ import {
 import { categories } from "./Input";
 import Item from "./Item";
 import { Loader } from "react-feather";
+import { User } from "firebase/auth";
 
 const maxDays = 10; // Maximum number of days for the chart
 
@@ -22,7 +23,13 @@ export type ItemData = FirestoreItem & {
   id: string;
 };
 
-export default function ItemList({ userId }: { userId: string }) {
+export default function ItemList({
+  user,
+  userId,
+}: {
+  user: User;
+  userId: string;
+}) {
   type SortOption = "datePurchased" | "expirationDate";
 
   const [sort, setSort] = useState<SortOption>("datePurchased");
@@ -98,7 +105,13 @@ export default function ItemList({ userId }: { userId: string }) {
           </div>
         ) : data.length > 0 ? (
           data.map((itemData, i) => (
-            <Item key={i} data={itemData} maxDays={maxDays} userId={userId} />
+            <Item
+              key={i}
+              data={itemData}
+              maxDays={maxDays}
+              user={user}
+              userId={userId}
+            />
           ))
         ) : (
           <div className="flex items-center justify-center col-span-2 min-h-40 bg-white border border-zinc-200 shadow-xs rounded-2xl">
