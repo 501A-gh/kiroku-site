@@ -96,7 +96,7 @@ export default function ItemList({ userId }: { userId: string }) {
           <div className="flex items-center justify-center col-span-2">
             Error: {error.message}
           </div>
-        ) : (
+        ) : data.length > 0 ? (
           data.map((itemData) => (
             <Item
               key={itemData.id}
@@ -105,6 +105,10 @@ export default function ItemList({ userId }: { userId: string }) {
               userId={userId}
             />
           ))
+        ) : (
+          <div className="flex items-center justify-center col-span-2 min-h-40 bg-white border border-zinc-200 shadow-xs rounded-2xl">
+            No items
+          </div>
         )}
       </div>
     </section>
