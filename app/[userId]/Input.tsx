@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/Button";
 import { DatePicker } from "@/components/DatePicker";
 import {
   Select,
@@ -132,14 +133,14 @@ export default function Input({
           <DatePicker required title="Expiration" name="expirationDate" />
         </div>
 
-        <button className="bg-emerald-500 font-semibold text-white rounded-full px-3 py-1.5 flex items-center gap-1 transition duration-200 hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 cursor-pointer active:scale-95 active:duration-300">
+        <Button type="submit" variant="action" disabled={pending}>
           {pending ? (
             <Loader className="animate-spin size-5" />
           ) : (
             <Plus className="size-5" />
           )}
           {pending ? "Adding..." : "Add Item"}
-        </button>
+        </Button>
       </div>
     </form>
   );

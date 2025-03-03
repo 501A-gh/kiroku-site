@@ -57,7 +57,7 @@ const DialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-1.5 text-center sm:text-left p-5",
+      "flex flex-col space-y-1.5 text-center text-sm p-5",
       className
     )}
     {...props}
@@ -69,13 +69,7 @@ const DialogFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 not-only-of-type p-5",
-      className
-    )}
-    {...props}
-  />
+  <div className={cn("not-only-of-type p-5", className)} {...props} />
 );
 DialogFooter.displayName = "DialogFooter";
 
@@ -85,7 +79,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn("text-base font-semibold", className)}
+    className={cn("text-sm font-medium text-zinc-800", className)}
     {...props}
   />
 ));

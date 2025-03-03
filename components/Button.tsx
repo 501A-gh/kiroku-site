@@ -4,18 +4,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full text-sm font-semibold stroke-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-95 cursor-pointer select-none shadow-xs transition-all",
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        filledDialog:
-          "border border-zinc-500 h-6 bg-zinc-400 text-white cursor-pointer active:scale-95",
-        transparentDialog:
-          "border border-red-500 h-6 text-red-500 cursor-pointer active:scale-95 hover:bg-red-500 hover:text-white",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        default: "border border-zinc-200 bg-white text-black",
+        danger: "border border-red-500 bg-red-500 text-white",
+        action: "border border-emerald-500 bg-emerald-500 text-white",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
