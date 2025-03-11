@@ -15,10 +15,10 @@ const Support = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Supprort and Contact</DialogTitle>
+          <DialogTitle>Support and Contact</DialogTitle>
         </DialogHeader>
-        <div>
-          <div className="px-4 pb-4 flex flex-col gap-3">
+        <div className="px-2 pb-2">
+          <div className="w-full space-y-8 border border-zinc-200 bg-white p-7 shadow-xs rounded-2xl">
             <b>Adding an Item</b>
             <ul>
               <li>Enter the product name and (optional) description.</li>
