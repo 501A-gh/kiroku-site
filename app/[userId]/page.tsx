@@ -5,10 +5,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import Link from "next/link";
-import { Lock } from "react-feather";
+import { HelpCircle, Lock } from "react-feather";
 import Input from "./Input";
 import ItemList from "./ItemList";
 import Settings from "./Settings";
+import Support from "./Support";
 
 export default function Fridge({
   params,
@@ -38,6 +39,7 @@ export default function Fridge({
           <div className="flex flex-row items-center gap-5">
             {userId === user.uid ? (
               <>
+                <Support />
                 <Settings user={user} userId={userId} />
                 <Profile user={user} />
               </>
