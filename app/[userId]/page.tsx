@@ -10,7 +10,7 @@ import Input from "./Input";
 import ItemList from "./ItemList";
 import Settings from "./Settings";
 import Support from "./Support";
-import { cn } from "@/utils";
+import Image from "next/image";
 
 export default function Fridge({
   params,
@@ -35,18 +35,26 @@ export default function Fridge({
   ) : (
     <div className="min-h-screen">
       <header className="flex items-center p-6 w-full bg-white border-b border-zinc-200">
-        <div
-          className={cn(
-            "flex items-center max-w-[750px] w-full mx-auto",
-            userId === user.uid ? "justify-between" : "justify-center"
-          )}
-        >
+        <div className="flex items-center max-w-[750px] w-full mx-auto justify-between">
+          <Link
+            href="/"
+            className="flex items-center gap-2 no-underline text-black transition-transform active:scale-95"
+          >
+            <Image
+              src="/logo.png"
+              alt="Kiroku Logo"
+              width={26}
+              height={26}
+              quality={100}
+            />
+            <h1 className="text-xl font-bold">Kiroku</h1>
+          </Link>
           {userId === user.uid ? (
             <>
-              <Profile user={user} />
               <div className="flex flex-row items-center gap-5">
                 <Support />
                 <Settings user={user} userId={userId} />
+                <Profile user={user} />
               </div>
             </>
           ) : (
