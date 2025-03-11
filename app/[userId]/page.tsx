@@ -5,11 +5,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase";
 import FullScreenLoader from "@/components/FullScreenLoader";
 import Link from "next/link";
-import { HelpCircle, Lock } from "react-feather";
+import { Lock } from "react-feather";
 import Input from "./Input";
 import ItemList from "./ItemList";
 import Settings from "./Settings";
 import Support from "./Support";
+import { cn } from "@/utils";
 
 export default function Fridge({
   params,
@@ -34,26 +35,23 @@ export default function Fridge({
   ) : (
     <div className="min-h-screen">
       <header className="flex items-center p-6 w-full bg-white border-b border-zinc-200">
-        <div className="flex items-center justify-between max-w-[750px] w-full mx-auto">
-          <div className="flex flex-row items-center">
-            <img
-              src="/Kiroku-Logo.png"
-              alt="Kiroku Logo"
-              className="w-10 h-auto"
-            />
-            <h3>Kiroku</h3>
-          </div>
-          <div className="flex flex-row items-center gap-5">
-            {userId === user.uid ? (
-              <>
+        <div
+          className={cn(
+            "flex items-center max-w-[750px] w-full mx-auto",
+            userId === user.uid ? "justify-between" : "justify-center"
+          )}
+        >
+          {userId === user.uid ? (
+            <>
+              <Profile user={user} />
+              <div className="flex flex-row items-center gap-5">
                 <Support />
                 <Settings user={user} userId={userId} />
-                <Profile user={user} />
-              </>
-            ) : (
-              <h5>Viewing</h5>
-            )}
-          </div>
+              </div>
+            </>
+          ) : (
+            <h5>Viewing</h5>
+          )}
         </div>
       </header>
       <main className="p-6">

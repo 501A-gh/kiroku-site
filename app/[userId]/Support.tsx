@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from "@/components/Dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { HelpCircle, Link2 } from "react-feather";
+import { HelpCircle } from "react-feather";
 
 const Support = () => {
   return (
@@ -30,7 +30,7 @@ const Support = () => {
             </ul>
             <b>Managing Items</b>
             <ul>
-              <li>View all added items under the "All Items" section.</li>
+              <li>View all added items under the “All Item” section.</li>
               <li>
                 Use the filter options to sort by category or purchase date.
               </li>
@@ -40,7 +40,7 @@ const Support = () => {
               <div className="w-full border border-zinc-200 bg-zinc-50 rounded-lg p-2">
                 <a
                   className="text-zinc-800 no-underline hover:text-blue-600"
-                  href=" https://forms.gle/UTZRv5P7R9jwsXvG7"
+                  href="https://forms.gle/UTZRv5P7R9jwsXvG7"
                 >
                   https://forms.gle/UTZRv5P7R9jwsXvG7
                 </a>
