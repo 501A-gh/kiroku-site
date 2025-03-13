@@ -71,7 +71,7 @@ export default function Settings({
     if (state) {
       if (state.success) {
         toast({
-          title: "Item Added",
+          title: "Changes Saved",
           description: state?.message,
           state: "success",
         });

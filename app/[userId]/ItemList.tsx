@@ -1,9 +1,9 @@
 "use client";
 import { db } from "@/firebase";
-import { FirestoreItem } from "@/types";
-import { collection, orderBy, query, where } from "firebase/firestore";
+import { FirestoreItem, UserSettings } from "@/types";
+import { collection, doc, orderBy, query, where } from "firebase/firestore";
 import React, { useState } from "react";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 
 import {
   Select,
@@ -16,8 +16,6 @@ import { categories } from "./Input";
 import Item from "./Item";
 import { Loader } from "react-feather";
 import { User } from "firebase/auth";
-
-const maxDays = 10; // Maximum number of days for the chart
 
 export type ItemData = FirestoreItem & {
   id: string;
@@ -34,7 +32,7 @@ export default function ItemList({
 
   const [sort, setSort] = useState<SortOption>("datePurchased");
   const [filter, setFilter] = useState<string>("none");
-  const [value, loading, error] = useCollection(
+  const [firestoreItems, loading, error] = useCollection(
     query(
       collection(db, "users", userId, "items"),
       orderBy(sort),
@@ -48,7 +46,12 @@ export default function ItemList({
   );
 
   const data =
-    value?.docs.map((doc) => ({ ...doc.data(), id: doc.id } as ItemData)) || [];
+    firestoreItems?.docs.map(
+      (doc) => ({ ...doc.data(), id: doc.id } as ItemData)
+    ) || [];
+
+  const [firestoreUser] = useDocument(doc(db, "users", userId));
+  const { progressBar } = (firestoreUser?.data() as UserSettings) || {};
 
   return (
     <section className="w-full flex flex-col gap-4">
@@ -108,7 +111,7 @@ export default function ItemList({
             <Item
               key={i}
               data={itemData}
-              maxDays={maxDays}
+              maxDays={progressBar}
               user={user}
               userId={userId}
             />
