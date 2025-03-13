@@ -22,7 +22,7 @@ export default function Profile({ user }: { user: User }) {
         />
       </PopoverTrigger>
       <PopoverContent
-        align="start"
+        align="end"
         sideOffset={4}
         className="bg-white border border-zinc-200 p-3 rounded-2xl shadow-md min-w-60 flex flex-col gap-4"
       >
