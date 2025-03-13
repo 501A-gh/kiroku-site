@@ -85,7 +85,7 @@ export default function ItemList({
             <SelectTrigger>
               <SelectValue placeholder="Category" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent align="end">
               <SelectItem value="datePurchased" className="capitalize">
                 Date Purchased
               </SelectItem>
